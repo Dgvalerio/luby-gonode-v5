@@ -30,11 +30,11 @@ Route.put('/forgot-password', 'ForgotPasswordsController.update') //.validator('
 
 Route.get('/files/:id', 'FilesController.show')
 
-// Route.group(() => {
-Route.post('/files', 'FilesController.store')
+Route.group(() => {
+  Route.post('/files', 'FilesController.store')
 
-// Route.resource('projects', 'ProjectController').apiOnly()
-// .validator(new Map([[['projects.store'], ['project']]]))
-// Route.resource('projects.tasks', 'TaskController').apiOnly()
-// .validator(new Map([[['projects.tasks.store'], ['task']]]))
-// }).middleware(['auth'])
+  Route.resource('projects', 'ProjectController').apiOnly()
+  // .validator(new Map([[['projects.store'], ['project']]]))
+  Route.resource('projects.tasks', 'TaskController').apiOnly()
+  // .validator(new Map([[['projects.tasks.store'], ['task']]]))
+}).middleware(['auth'])
