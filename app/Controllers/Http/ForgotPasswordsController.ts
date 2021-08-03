@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import { string } from '@ioc:Adonis/Core/Helpers'
+import moment from 'moment'
 
 export default class ForgotPasswordsController {
   public async store({ request, response }: HttpContextContract) {
@@ -10,7 +11,7 @@ export default class ForgotPasswordsController {
 
       const user = await User.findByOrFail('email', email)
 
-      user.token = string.generateRandom(16)
+      user.token = string.generateRandom(32)
       user.token_created_at = new Date()
 
       await user.save()
@@ -26,6 +27,36 @@ export default class ForgotPasswordsController {
       return response.status(e.status).send({
         error: {
           message: 'Algo não deu certo, esse e-mail existe?',
+        },
+      })
+    }
+  }
+
+  public async update({ request, response }: HttpContextContract) {
+    try {
+      const { token, password } = request.only(['token', 'password'])
+
+      const user = await User.findByOrFail('token', token)
+
+      const tokenExpired = moment().subtract('2', 'days').isAfter(user.token_created_at)
+
+      if (tokenExpired) {
+        return response.status(401).send({
+          error: {
+            message: 'Esse token de recuperação expirou!',
+          },
+        })
+      }
+
+      user.token = undefined
+      user.token_created_at = undefined
+      user.password = password
+
+      await user.save()
+    } catch (e) {
+      return response.status(e.status).send({
+        error: {
+          message: 'Algo deu errado ao resetar sua senha!',
         },
       })
     }
