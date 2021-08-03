@@ -13,6 +13,9 @@ export default class Project extends BaseModel {
   @column()
   public description: string
 
+  @column()
+  public userId: number
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 

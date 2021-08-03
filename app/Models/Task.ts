@@ -17,11 +17,20 @@ export default class Task extends BaseModel {
   @column()
   public due_date?: Date
 
+  @column()
+  public projectId: number
+
   @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>
 
+  @column()
+  public userId: number
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
+
+  @column()
+  public fileId: number
 
   @belongsTo(() => File)
   public file: BelongsTo<typeof File>
