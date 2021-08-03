@@ -7,9 +7,9 @@ export default class UsersController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const { email, password } = request.only(['email', 'password'])
+    const { username, email, password } = request.only(['email', 'password', 'username'])
 
-    return await User.create({ email, password })
+    return await User.create({ username, email, password })
   }
 
   public async show({}: HttpContextContract) {}

@@ -1,8 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class AuthController {
-  public async index({}: HttpContextContract) {}
-
   public async store({ auth, request, response }: HttpContextContract) {
     const { email, password } = request.only(['email', 'password'])
 
@@ -12,8 +10,4 @@ export default class AuthController {
       return response.badRequest('Invalid credentials')
     }
   }
-
-  public async show({}: HttpContextContract) {}
-
-  public async destroy({}: HttpContextContract) {}
 }

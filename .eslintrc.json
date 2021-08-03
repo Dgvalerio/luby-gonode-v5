@@ -1,7 +1,24 @@
 {
-  "extends": ["plugin:adonis/typescriptApp", "prettier"],
-  "plugins": ["prettier"],
+  "extends": [
+    "plugin:adonis/typescriptApp",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "semi": false,
+        "singleQuote": true,
+        "useTabs": false,
+        "quoteProps": "consistent",
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "printWidth": 100
+      }
+    ]
   }
 }
