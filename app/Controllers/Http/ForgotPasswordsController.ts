@@ -3,9 +3,12 @@ import User from 'App/Models/User'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import moment from 'moment'
+import ForgotPasswordValidator from 'App/Validators/ForgotPasswordValidator'
+import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator'
 
 export default class ForgotPasswordsController {
   public async store({ request, response }: HttpContextContract) {
+    await request.validate(ForgotPasswordValidator)
     try {
       const { email, redirect_url: url } = request.only(['email', 'redirect_url'])
 
@@ -33,6 +36,7 @@ export default class ForgotPasswordsController {
   }
 
   public async update({ request, response }: HttpContextContract) {
+    await request.validate(ResetPasswordValidator)
     try {
       const { token, password } = request.only(['token', 'password'])
 

@@ -23,10 +23,10 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.post('/users', 'UsersController.store')
 Route.get('/users', 'UsersController.index')
 
-Route.post('/login', 'AuthController.store') //.validator('Session')
+Route.post('/login', 'AuthController.store')
 
-Route.post('/forgot-password', 'ForgotPasswordsController.store') //.validator('ForgotPassword')
-Route.put('/forgot-password', 'ForgotPasswordsController.update') //.validator('ResetPassword')
+Route.post('/forgot-password', 'ForgotPasswordsController.store')
+Route.put('/forgot-password', 'ForgotPasswordsController.update')
 
 Route.get('/files/:id', 'FilesController.show')
 
@@ -34,7 +34,5 @@ Route.group(() => {
   Route.post('/files', 'FilesController.store')
 
   Route.resource('projects', 'ProjectsController').apiOnly()
-  // .validator(new Map([[['projects.store'], ['project']]]))
   Route.resource('projects.tasks', 'TasksController').apiOnly()
-  // .validator(new Map([[['projects.tasks.store'], ['task']]]))
 }).middleware(['auth'])

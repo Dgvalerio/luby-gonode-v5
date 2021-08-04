@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Task from 'App/Models/Task'
+import TaskValidator from 'App/Validators/TaskValidator'
 
 export default class TasksController {
   public async index({ params }: HttpContextContract) {
@@ -7,6 +8,7 @@ export default class TasksController {
   }
 
   public async store({ request, params }: HttpContextContract) {
+    await request.validate(TaskValidator)
     const data = request.only(['user_id', 'title', 'description', 'due_date', 'file_id'])
 
     return await Task.create({
