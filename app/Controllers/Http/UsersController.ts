@@ -12,8 +12,13 @@ export default class UsersController {
   public async store({ request }: HttpContextContract) {
     await request.validate(UserValidator)
     const { username, email, password } = request.only(['email', 'password', 'username'])
+    const addresses = request.input('addresses')
 
-    return await User.create({ username, email, password })
+    const user = await User.create({ username, email, password })
+
+    user.related('addresses').createMany(addresses)
+
+    return user
   }
 
   public async show({}: HttpContextContract) {}

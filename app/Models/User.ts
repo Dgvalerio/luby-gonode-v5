@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import UserAddress from 'App/Models/UserAddress'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -23,6 +24,9 @@ export default class User extends BaseModel {
 
   @column()
   public token_created_at?: Date
+
+  @hasMany(() => UserAddress)
+  public addresses: HasMany<typeof UserAddress>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
