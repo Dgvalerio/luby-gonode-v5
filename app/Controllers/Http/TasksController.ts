@@ -3,8 +3,10 @@ import Task from 'App/Models/Task'
 import TaskValidator from 'App/Validators/TaskValidator'
 
 export default class TasksController {
-  public async index({ params }: HttpContextContract) {
-    return Task.query().where('project_id', params.project_id).preload('user')
+  public async index({ request, params }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 10)
+    return Task.query().where('project_id', params.project_id).preload('user').paginate(page, limit)
   }
 
   public async store({ request, params }: HttpContextContract) {

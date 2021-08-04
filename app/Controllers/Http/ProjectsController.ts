@@ -3,8 +3,10 @@ import Project from 'App/Models/Project'
 import ProjectValidator from 'App/Validators/ProjectValidator'
 
 export default class ProjectsController {
-  public async index({}: HttpContextContract) {
-    return Project.query().preload('user')
+  public async index({ request }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 10)
+    return Project.query().preload('user').paginate(page, limit)
   }
 
   public async store({ request, auth }: HttpContextContract) {
