@@ -29,6 +29,8 @@
     "@adonisjs/mail": "^7.2.3",
     "@adonisjs/repl": "^3.0.0",
     "@adonisjs/view": "^6.0.8",
+    "@sentry/node": "^6.10.0",
+    "@sentry/tracing": "^6.10.0",
     "luxon": "^2.0.1",
     "moment": "^2.29.1",
     "pg": "^8.7.1",

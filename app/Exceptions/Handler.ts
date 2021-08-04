@@ -15,9 +15,19 @@
 
 import Logger from '@ioc:Adonis/Core/Logger'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
+import Env from '@ioc:Adonis/Core/Env'
+import * as Sentry from '@sentry/node'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   constructor() {
     super(Logger)
+  }
+
+  public async report(error) {
+    Sentry.init({
+      dsn: Env.get('SENTRY_DSN'),
+      tracesSampleRate: 1.0,
+    })
+    Sentry.captureException(error)
   }
 }
