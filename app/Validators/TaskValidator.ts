@@ -25,7 +25,7 @@ export default class TaskValidator {
    */
   public schema = schema.create({
     title: schema.string({}),
-    password: schema.date({}),
+    due_date: schema.date({}),
   })
 
   /**
