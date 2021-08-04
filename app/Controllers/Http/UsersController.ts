@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import UserValidator from 'App/Validators/UserValidator'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class UsersController {
   public async index({ request }: HttpContextContract) {
@@ -14,9 +15,13 @@ export default class UsersController {
     const { username, email, password } = request.only(['email', 'password', 'username'])
     const addresses = request.input('addresses')
 
-    const user = await User.create({ username, email, password })
+    const trx = await Database.transaction()
 
-    user.related('addresses').createMany(addresses)
+    const user = await User.create({ username, email, password }, trx)
+
+    user.useTransaction(trx).related('addresses').createMany(addresses)
+
+    await trx.commit()
 
     return user
   }
